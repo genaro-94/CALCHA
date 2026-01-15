@@ -66,30 +66,26 @@ document.addEventListener("DOMContentLoaded", () => {
     },
     {
       id: 5,
-      nombre: "Cerámica greco",
+      nombre: "artesanias franccesco greco",
       rubro: "artesania",
       tipoOperacion: "catalogo",
       descripcion: "Piezas hechas a mano",
-      whatsapp: "5493871112111",
+      whatsapp: "5493868460617",
       catalogo: [
         { nombre: "Ocarina negra", precio: 6000 },
         { nombre: "Llama cerámica", precio: 5500 },
         { nombre: "Ocarina negra ", precio: 8000 },
-        { nombre: "maceta pintada a mano ", precio: 8000 }
+        { nombre: "maceta pintada a mano ", precio: 8000 },
+        { nombre: "chock caracoles buzios", precio: 6000 },
       ]
     },
     {
 
       id: 3,
-
       nombre: "Hotel san jorge",
-
       rubro: "hotel",
-
       tipoOperacion: "reserva",
-
       descripcion: "Habitaciones en pleno centro de cafayate",
-
       whatsapp: "5493872222222"
 
     },
