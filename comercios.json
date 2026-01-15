@@ -4,7 +4,7 @@
     "nombre": "Sandwichería Don Pepe",
     "rubro": "gastronomía",
     "descripcion": "Sandwichería local con los mejores sándwiches y menú del día.",
-    "imagen": "images/images-8.jpeg",
+    "imagen": "images/images8.jpeg",
     "tipoOperacion": "pedido",
     "permiteDelivery": true,
     "menu": [
@@ -23,7 +23,7 @@
     "nombre": "Panadería La Quebrada",
     "rubro": "panadería",
     "descripcion": "Pan casero, facturas y repostería artesanal.",
-    "imagen": "images/harry.jpeg",
+    "imagen": "images/Harry.jpeg",
     "tipoOperacion": "pedido",
     "permiteDelivery": false,
     "menu": [
@@ -41,7 +41,7 @@
     "nombre": "Ferretería El Martillo",
     "rubro": "ferretería",
     "descripcion": "Todo para el hogar, herramientas y materiales.",
-    "imagen": "images/pika.jpeg",
+    "imagen": "images/Pika.jpeg",
     "tipoOperacion": "pedido",
     "permiteDelivery": false,
     "menu": [
