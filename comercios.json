@@ -67,10 +67,10 @@
   {
   "id": 4,
   "nombre": "Hospedaje San Jorge",
-  "rubro": "hotelería",
+  "rubro": "Hotelería",
   "descripcion": "Un hermoso lugar para descansar en el centro de Cafayate.",
   "imagen": "images/sanjo.jpg",
-  "tipoOperacion": "info",
+  "tipoOperacion": "pedido",
   "permiteDelivery": false,
   "menu": [],
   "galeria": [
