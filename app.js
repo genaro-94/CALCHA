@@ -33,7 +33,22 @@ document.addEventListener("DOMContentLoaded", () => {
   let rubroActivo = "todos";
   let menuRubrosAbierto = false;
   let comercios = [];
+// ------------------------
+  // LIGHTBOX
+  // ------------------------
+  function abrirLightbox(src) {
+    const lightbox = document.getElementById("lightbox");
+    const img = document.getElementById("lightbox-img");
 
+    img.src = src;
+    lightbox.classList.remove("hidden");
+  }
+
+  document.addEventListener("click", e => {
+    if (e.target.id === "lightbox") {
+      e.target.classList.add("hidden");
+    }
+  });
   // ------------------------
   // HISTORIAL
   // ------------------------
