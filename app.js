@@ -156,6 +156,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // PEDIDO
   // ------------------------
   function renderPedido() {
+
+    history.pushState(
+  { vista: "pedido", comercioId: comercioActivo.id },
+  "",
+  "#pedido"
+);
     let menuHTML = "";
     comercioActivo.menu.forEach((item, i) => {
       const enCarrito = carrito.find(p => p.nombre === item.nombre);
