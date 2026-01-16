@@ -47,15 +47,39 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(lightbox);
 
   function abrirLightbox(src) {
-    lightboxImg.src = src;
-    lightbox.classList.remove("hidden");
-    document.body.style.overflow = "hidden"; // bloquea scroll
-  }
+  const lightbox = document.getElementById("lightbox");
+  const img = document.getElementById("lightbox-img");
 
-  lightbox.addEventListener("click", () => {
+  img.src = src;
+  lightbox.classList.remove("hidden");
+
+  // Añadimos un estado en el historial para que back lo cierre
+  history.pushState({ lightbox: true }, "");
+}
+
+// Cerrar lightbox al tocar afuera de la imagen
+document.addEventListener("click", e => {
+  const lightbox = document.getElementById("lightbox");
+  if (e.target.id === "lightbox") {
     lightbox.classList.add("hidden");
-    document.body.style.overflow = ""; // desbloquea scroll
-  });
+    // Al cerrar, eliminamos este estado del historial para no “duplicar back”
+    if (history.state?.lightbox) history.back();
+  }
+});
+
+// Manejo del botón físico de volver
+window.addEventListener("popstate", (e) => {
+  const lightbox = document.getElementById("lightbox");
+  if (lightbox && !lightbox.classList.contains("hidden")) {
+    // Si el lightbox está abierto, cerrarlo y evitar ir a la vista anterior
+    lightbox.classList.add("hidden");
+    // Cancelamos el efecto del popstate para que la vista no cambie
+    history.pushState({}, "");
+  } else {
+    // Si no hay lightbox, comportamiento normal (ya lo tenés en renderApp)
+    renderApp();
+  }
+});
 
   // ------------------------
   // HISTORIAL
