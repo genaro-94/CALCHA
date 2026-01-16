@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     <div id="lista-comercios"></div>
   `;
-}
+  }
 
     // Toggle rubros
     document.getElementById("btn-rubros").onclick = () => {
@@ -157,23 +157,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // ------------------------
   function renderPedido() {
 
+  if (comercioActivo) {
     history.pushState(
-  { vista: "pedido", comercioId: comercioActivo.id },
-  "",
-  "#pedido"
-);
-    let menuHTML = "";
-    comercioActivo.menu.forEach((item, i) => {
-      const enCarrito = carrito.find(p => p.nombre === item.nombre);
-      menuHTML += `
-        <div class="item-menu">
-          <span>${item.nombre} - $${item.precio}</span>
-          <div style="display:flex; align-items:center; gap:6px;">
-            ${enCarrito ? `<button data-i="${i}" data-accion="restar">−</button><strong>${enCarrito.cantidad}</strong>` : ""}
-            <button data-i="${i}" data-accion="sumar">+</button>
-          </div>
-        </div>`;
-    });
+      { vista: "pedido", comercioId: comercioActivo.id },
+      "",
+      "#pedido"
+    );
+  }
+
+  let menuHTML = "";
+  comercioActivo.menu.forEach((item, i) => {
+    const enCarrito = carrito.find(p => p.nombre === item.nombre);
+    menuHTML += `
+      <div class="item-menu">
+        <span>${item.nombre} - $${item.precio}</span>
+        <div style="display:flex; align-items:center; gap:6px;">
+          ${enCarrito ? `<button data-i="${i}" data-accion="restar">−</button><strong>${enCarrito.cantidad}</strong>` : ""}
+          <button data-i="${i}" data-accion="sumar">+</button>
+        </div>
+      </div>`;
+  });
+
+  // ⬇️ el resto de TU renderPedido sigue igual
+  }
 
     // Galería segura
     let galeriaHTML = '';
