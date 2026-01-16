@@ -49,7 +49,7 @@
   {
     "id": 3,
     "nombre": "Ferretería El Martillo",
-    "rubro": "ferretería",
+    "rubro": "servicios",
     "descripcion": "Todo para el hogar, herramientas y materiales.",
     "imagen": "images/Pika.jpeg",
     "tipoOperacion": "pedido",
@@ -67,7 +67,7 @@
   {
   "id": 4,
   "nombre": "Hospedaje San Jorge",
-  "rubro": "Hotelería",
+  "rubro": "turismo",
   "descripcion": "Un hermoso lugar para descansar en el centro de Cafayate.",
   "imagen": "images/sanjo.jpg",
   "tipoOperacion": "reserva",
