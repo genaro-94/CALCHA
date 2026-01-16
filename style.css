@@ -270,6 +270,7 @@ input:focus {
     transform: translateY(0);
   }
 }
+
 /* =========================
    FILTROS POR RUBRO
 ========================= */
@@ -295,7 +296,8 @@ input:focus {
   background: linear-gradient(135deg, #a14a1a, #d67d3e);
   color: #fff;
   border-color: transparent;
-  }
+}
+
 .comercio-card {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -314,9 +316,10 @@ input:focus {
   border-radius: 4px;
   margin-bottom: 6px;
 }
+
 .galeria-comercio {
   display: flex;
-  overflow-x: auto; /* scroll horizontal */
+  overflow-x: auto;
   gap: 8px;
   margin: 12px 0;
 }
@@ -342,23 +345,10 @@ input:focus {
   transform: scale(1.05);
 }
 
-/* Lightbox */
-.overlay {
-  position: fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.8);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index: 1000;
-}
+/* =========================
+   BOTONES ESPECIALES
+========================= */
 
-.overlay-img {
-  max-width:90%;
-  max-height:90%;
-  border-radius:8px;
-}
 .btn-sumar {
   width: 100%;
   padding: 14px;
@@ -370,6 +360,11 @@ input:focus {
   border-radius: 14px;
   font-weight: bold;
 }
+
+.btn-sumar {
+  margin-top: 0;
+}
+
 /* Botón sumar comercio dentro del menú */
 .btn-menu {
   width: 100%;
@@ -392,19 +387,20 @@ input:focus {
 .btn-menu:hover {
   background: rgba(193, 68, 14, 0.06);
 }
+
 .acciones {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.btn-sumar {
-  margin-top: 0;
-}
-/* Lightbox estilo Instagram */
+/* =========================
+   LIGHTBOX ESTILO INSTAGRAM
+========================= */
+
 .lightbox {
   position: fixed;
-  inset: 0; /* top:0; right:0; bottom:0; left:0 */
+  inset: 0;
   background: rgba(0,0,0,0.85);
   display: flex;
   justify-content: center;
@@ -418,7 +414,13 @@ input:focus {
   border-radius: 12px;
   box-shadow: 0 0 30px rgba(0,0,0,0.6);
   cursor: pointer;
+  transition: transform 0.25s ease;
 }
+
+.lightbox img:hover {
+  transform: scale(1.02);
+}
+
 .hidden {
   display: none;
-}
+                               }
