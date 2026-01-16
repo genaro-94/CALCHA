@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <button data-rubro="todos">Todos</button>
   <button data-rubro="gastronomía">🍔 Gastronomía</button>
   <button data-rubro="artesanía">🏺 Artesanía</button>
-  <button data-rubro="hotel">🏨 Hotelería</button>
+  <button data-rubro="turismo">⛰️ turismo</button>
   <button data-rubro="servicios">🛠️ Servicios</button>
 </div>
 
