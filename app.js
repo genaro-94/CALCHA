@@ -1,5 +1,5 @@
 // =========================
-// CALCHA - MOTOR COMPLETO
+// CALCHA - MOTOR COMPLETO (RESTAURADO)
 // =========================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,16 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
   let comercios = [];
 
   // ------------------------
-  // HISTORIAL (BOTÓN FÍSICO)
+  // HISTORIAL
   // ------------------------
   window.addEventListener("popstate", (e) => {
-    if (!e.state) {
-      vistaActual = "home";
-    } else {
-      vistaActual = e.state.vista;
-      if (e.state.comercioId) {
-        comercioActivo = comercios.find(c => c.id === e.state.comercioId);
-      }
+    vistaActual = e.state?.vista || "home";
+    if (e.state?.comercioId) {
+      comercioActivo = comercios.find(c => c.id === e.state.comercioId);
     }
     renderApp();
   });
@@ -33,15 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // DATA
   // ------------------------
   fetch("comercios.json")
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
       comercios = data;
       renderHome();
     });
 
-  // ------------------------
-  // RENDER GENERAL
-  // ------------------------
   function renderApp() {
     if (vistaActual === "home") renderHome();
     if (vistaActual === "pedido") renderPedido();
@@ -61,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <img src="images/Logo.png" style="width:32px;vertical-align:middle;margin-right:8px;">
         CALCHA
       </h1>
-      <p>El mercado local en tu mano</p>
+      <p class="subtitulo">El mercado local en tu mano</p>
 
       <button id="btn-rubros">☰</button>
 
@@ -75,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <hr>
           <button id="btn-info">ℹ️ ¿Qué es Calcha?</button>
         </div>` : ""}
+
       <div id="lista-comercios"></div>
     `;
 
@@ -109,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "card-comercio";
       card.innerHTML = `
-        <img src="${c.imagen}" style="width:100%;object-fit:cover;">
+        <img src="${c.imagen}" class="comercio-img">
         <h3>${c.nombre}</h3>
         <p>${c.descripcion}</p>
         <button>Ver</button>
@@ -120,11 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tipoEntrega = null;
         direccionEntrega = "";
         vistaActual = "pedido";
-        history.pushState(
-          { vista: "pedido", comercioId: c.id },
-          "",
-          "#pedido"
-        );
+        history.pushState({ vista: "pedido", comercioId: c.id }, "", "#pedido");
         renderPedido();
       };
       lista.appendChild(card);
@@ -148,9 +138,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <strong>${enCarrito.cantidad}</strong>` : ""}
             <button data-i="${i}" data-a="sumar">+</button>
           </div>
-        </div>
-      `;
+        </div>`;
     });
+
+    const total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
 
     app.innerHTML = `
       <button class="btn-volver">← Volver</button>
@@ -159,14 +150,23 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="menu">${menuHTML}</div>
 
       <h3>Entrega</h3>
-      <button id="retiro">🏠 Retiro</button>
-      <button id="delivery">🛵 Delivery</button>
+      <div class="entrega">
+        <button id="retiro" class="${tipoEntrega === "retiro" ? "activo" : ""}">🏠 Retiro</button>
+        ${comercioActivo.permiteDelivery
+          ? `<button id="delivery" class="${tipoEntrega === "delivery" ? "activo" : ""}">🛵 Delivery</button>`
+          : ""}
+      </div>
 
-      ${tipoEntrega === "delivery" ? `
-        <input id="direccion" placeholder="Dirección de entrega" value="${direccionEntrega}">
-      ` : ""}
+      ${tipoEntrega === "delivery"
+        ? `<input id="direccion" placeholder="Dirección" value="${direccionEntrega}">`
+        : ""}
 
-      <button id="continuar">Continuar</button>
+      <div class="carrito">
+        <strong>Total: $${total}</strong>
+        <button class="btn-continuar" ${!total || !tipoEntrega ? "disabled" : ""} id="continuar">
+          Continuar
+        </button>
+      </div>
     `;
 
     document.querySelector(".btn-volver").onclick = () => history.back();
@@ -178,9 +178,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (b.dataset.a === "sumar") {
           if (ex) ex.cantidad++;
           else carrito.push({ ...prod, cantidad: 1 });
-        } else if (b.dataset.a === "restar" && ex) {
+        }
+        if (b.dataset.a === "restar" && ex) {
           ex.cantidad--;
-          if (ex.cantidad <= 0) carrito = carrito.filter(p => p !== ex);
+          if (ex.cantidad === 0) carrito = carrito.filter(p => p !== ex);
         }
         renderPedido();
       };
@@ -192,15 +193,16 @@ document.addEventListener("DOMContentLoaded", () => {
       renderPedido();
     };
 
-    document.getElementById("delivery").onclick = () => {
-      tipoEntrega = "delivery";
-      renderPedido();
-    };
+    const btnDel = document.getElementById("delivery");
+    if (btnDel) {
+      btnDel.onclick = () => {
+        tipoEntrega = "delivery";
+        renderPedido();
+      };
+    }
 
     const dir = document.getElementById("direccion");
-    if (dir) {
-      dir.oninput = e => direccionEntrega = e.target.value;
-    }
+    if (dir) dir.oninput = e => direccionEntrega = e.target.value;
 
     document.getElementById("continuar").onclick = () => {
       vistaActual = "confirmar";
@@ -213,20 +215,32 @@ document.addEventListener("DOMContentLoaded", () => {
   // CONFIRMAR
   // ------------------------
   function renderConfirmar() {
-    let total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
-    let texto = carrito.map(p => `${p.cantidad}x ${p.nombre}`).join("%0A");
+    const total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
 
-    let msg = `Pedido en ${comercioActivo.nombre}%0A${texto}%0ATotal: $${total}%0AEntrega: ${tipoEntrega}`;
-    if (tipoEntrega === "delivery") msg += `%0ADirección: ${direccionEntrega}`;
+    let resumen = carrito.map(p =>
+      `<div class="item-confirmacion">
+        <span>${p.nombre} x${p.cantidad}</span>
+        <span>$${p.precio * p.cantidad}</span>
+      </div>`
+    ).join("");
+
+    let msg = `🛒 Pedido - ${comercioActivo.nombre}\n`;
+    carrito.forEach(p => msg += `• ${p.nombre} x${p.cantidad}\n`);
+    msg += `\nTotal: $${total}\nEntrega: ${tipoEntrega}`;
+    if (tipoEntrega === "delivery") msg += `\nDirección: ${direccionEntrega}`;
 
     app.innerHTML = `
       <button class="btn-volver">← Volver</button>
       <h2>Confirmar pedido</h2>
-      <p>Total: $${total}</p>
-      <a target="_blank"
-         href="https://wa.me/54${comercioActivo.whatsapp}?text=${msg}">
-         Enviar por WhatsApp
-      </a>
+
+      <div class="resumen">${resumen}</div>
+
+      <h3>Total: $${total}</h3>
+
+      <button class="btn-confirmar"
+        onclick="window.open('https://wa.me/54${comercioActivo.whatsapp}?text=${encodeURIComponent(msg)}','_blank')">
+        Enviar por WhatsApp
+      </button>
     `;
 
     document.querySelector(".btn-volver").onclick = () => history.back();
@@ -238,8 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderInfo() {
     app.innerHTML = `
       <button class="btn-volver">← Volver</button>
-      <h2>¿Qué es Calcha?</h2>
-      <p>Plataforma de comercios locales.</p>
+      <h2>🌵 ¿Qué es Calcha?</h2>
+      <p>Conecta comercios locales con personas de la zona, sin intermediarios.</p>
     `;
     document.querySelector(".btn-volver").onclick = () => history.back();
   }
