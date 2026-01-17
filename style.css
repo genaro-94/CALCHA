@@ -424,3 +424,47 @@ input:focus {
 .hidden {
   display: none;
                                }
+/* =========================
+   BUSCADOR AUTOCOMPLETE
+========================= */
+.buscador {
+  margin: 12px 0;
+  position: relative;
+}
+
+#input-busqueda {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1.8px solid #d8c1a6;
+  font-size: 14px;
+}
+
+#resultados-busqueda {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.8px solid #d8c1a6;
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+#resultados-busqueda div {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#resultados-busqueda div:hover {
+  background: rgba(193, 68, 14, 0.1);
+}
+
+.resultado-highlight {
+  font-weight: 600;
+  color: #a14a1a;
+}
