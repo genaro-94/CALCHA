@@ -193,12 +193,13 @@ function renderHome() {
     };
   }
 
-  document.querySelectorAll("[data-rubro]").forEach(b => {
-    b.onclick = () => {
-      rubroActivo = b.dataset.rubro;
-      renderHome();
-    };
-  });
+  document.querySelectorAll(".rubros-grid [data-rubro]").forEach(b => {
+  b.onclick = () => {
+    rubroActivo = b.dataset.rubro;
+    menuRubrosAbierto = false; // cierra el menú hamburguesa
+    renderHome();
+  };
+});
 
   // ------------------------
   // Renderizar lista de comercios
