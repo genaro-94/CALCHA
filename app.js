@@ -80,16 +80,19 @@ document.addEventListener("click", e => {
 });
 
 // Manejo del botón físico de back
-window.addEventListener("popstate", e => {
-  // Si hay un lightbox abierto, lo cerramos y cancelamos el popstate “real”
-  const lightbox = document.getElementById("lightbox");
-  if (!lightbox.classList.contains("hidden")) {
-    lightbox.classList.add("hidden");
-    // No hacemos nada más, así que la vista del comercio queda visible
+window.addEventListener("popstate", (e) => {
+  const estado = e.state || {};
+
+  vistaActual = estado.vista || "home";
+  rubroActivo = estado.rubro || "todos";
+
+  if (estado.comercioId) {
+    comercioActivo = comercios.find(c => c.id === estado.comercioId);
   } else {
-    // Si no hay lightbox abierto, el popstate sigue normal (vuelve a home, etc.)
-    renderApp(); 
+    comercioActivo = null;
   }
+
+  renderApp();
 });
 
   // ------------------------
