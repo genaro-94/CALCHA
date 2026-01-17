@@ -337,7 +337,18 @@ const filtrados = rubroActivo === "todos"
   }
 }
 
+function irARubro(rubro) {
+  history.pushState(
+    { vista: "home" },
+    "",
+    ""
+  );
 
+  vistaActual = "rubro";
+  rubroActivo = rubro;
+
+  renderApp();
+}
   // ------------------------
   // PEDIDO
   // ------------------------
