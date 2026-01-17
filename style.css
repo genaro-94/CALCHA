@@ -468,3 +468,71 @@ input:focus {
   font-weight: 600;
   color: #a14a1a;
 }
+/* =========================
+   BARRA DE BÚSQUEDA
+========================= */
+.buscador {
+  position: relative;
+  margin: 12px 0;
+}
+
+.buscador input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1.8px solid #d67d3e;
+  font-size: 14px;
+  outline: none;
+}
+
+.buscador input:focus {
+  border-color: #a14a1a;
+  background: #fffdf8;
+}
+
+/* Contenedor de resultados con scroll interno */
+.resultados-scroll {
+  position: absolute;
+  top: 44px; /* altura del input + margen */
+  left: 0;
+  right: 0;
+  max-height: 220px; /* altura máxima del listado */
+  background: #fff;
+  border: 1.5px solid #d67d3e;
+  border-radius: 12px;
+  overflow-y: auto;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  z-index: 100;
+}
+
+/* Cada resultado */
+.resultado-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.15s;
+}
+
+.resultado-item:hover {
+  background: rgba(193, 68, 14, 0.08);
+}
+
+/* Nombre resaltado en la búsqueda */
+.resultado-highlight {
+  background: #ffeb3b33; /* amarillo semi-transparente */
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* Nombre y rubro */
+.resultado-item strong {
+  font-size: 14px;
+  color: #2a2a2a;
+}
+
+.resultado-item small {
+  font-size: 12px;
+  color: #7a3e12;
+}
