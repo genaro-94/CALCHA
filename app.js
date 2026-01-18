@@ -28,29 +28,11 @@ const database = getDatabase(firebaseApp);
 // DELIVERYs - Firebase
 // ------------------------
 
-// Función para obtener todos los deliverys
-async function cargarDeliverys() {
-  const dbRef = ref(database);
-  const snapshot = await get(child(dbRef, 'deliverys'));
-  if (snapshot.exists()) {
-    return snapshot.val();
-  } else {
-    return {};
-  }
-}
-
-// Función para actualizar disponibilidad
-function actualizarDisponibilidad(idDelivery, disponible) {
-  const deliveryRef = ref(database, 'deliverys/' + idDelivery);
-  update(deliveryRef, { disponible: disponible })
-    .then(() => console.log(`Delivery ${idDelivery} actualizado: ${disponible}`))
-    .catch(err => console.error(err));
-}
-
-// Función para renderizar lista de deliverys en la app
-async function renderDeliverys() {
+// Función para renderizar lista de deliverys en un contenedor específico
+async function renderDeliverys(containerId = "app") {
   const deliverys = await cargarDeliverys();
-  const appSection = document.getElementById("app"); // mantenemos la misma sección, podés cambiarla si querés
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
   let html = `<h2>Repartidores Disponibles</h2><div class="delivery-list">`;
 
@@ -67,25 +49,22 @@ async function renderDeliverys() {
   });
 
   html += `</div>`;
-  appSection.innerHTML = html;
 
-  // Agregar evento para cada botón
-  document.querySelectorAll(".btn-disponible").forEach(btn => {
+  // Insertamos sin borrar todo el container
+  const deliverySection = container.querySelector(".delivery-section");
+  if (deliverySection) deliverySection.innerHTML = html;
+  else container.insertAdjacentHTML("beforeend", `<div class="delivery-section">${html}</div>`);
+
+  // Eventos de los botones
+  container.querySelectorAll(".btn-disponible").forEach(btn => {
     btn.onclick = () => {
       const id = btn.dataset.id;
       const actualmente = deliverys[id].disponible;
       actualizarDisponibilidad(id, !actualmente);
-      // No recargamos inmediatamente, dejamos que onValue actualice automáticamente
+      renderDeliverys(containerId); // recarga solo la sección
     };
   });
 }
-
-// Escuchar cambios en tiempo real
-const deliveryRef = ref(database, 'deliverys');
-onValue(deliveryRef, snapshot => {
-  console.log("Deliverys actualizados", snapshot.val());
-  renderDeliverys(); // actualiza la UI automáticamente
-});
 
 // =========================
 // CALCHA - MOTOR COMPLETO (RESTAURADO)
