@@ -70,7 +70,6 @@ function abrirLightbox(src) {
   img.src = src;
   lightbox.classList.remove("hidden");
 
-  // PUSHSTATE para manejar el botón de back
   history.pushState({ lightbox: true }, "");
 }
 
