@@ -79,7 +79,15 @@ document.addEventListener("click", e => {
   }
 });
 
+window.addEventListener("popstate", (e) => {
+  // Si hay lightbox abierto y el estado NO es lightbox
+  const lightbox = document.getElementById("lightbox");
 
+  if (lightbox && !lightbox.classList.contains("hidden")) {
+    lightbox.classList.add("hidden");
+    return; // ⛔ NO renderizar la app
+  }
+});
   // ------------------------
   // HISTORIAL
   // ------------------------
