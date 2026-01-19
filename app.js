@@ -185,16 +185,18 @@ function renderHome() {
     <!-- Botón rubros -->
     <button id="btn-rubros">☰</button>
 
-    ${
+${
   menuRubrosAbierto
     ? `
-      <div class="acciones">
-        <button id="btn-info" class="btn-menu">ℹ️ ¿Qué es Calcha?</button>
-        <button id="btn-sumar-comercio" class="btn-menu">➕ Sumar mi comercio</button>
+      <div class="menu-overlay" id="menu-overlay">
+        <div class="acciones">
+          <button id="btn-info" class="btn-menu">ℹ️ ¿Qué es Calcha?</button>
+          <button id="btn-sumar-comercio" class="btn-menu">➕ Sumar mi comercio</button>
+        </div>
       </div>
     `
     : ""
-    }
+}
  <div id="selector-ubicacion"></div>
     <!-- Barra de búsqueda -->
     <div class="buscador">
