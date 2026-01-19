@@ -667,5 +667,3 @@ comercioActivo.menu.forEach((item, i) => {
       img.addEventListener("click", () => abrirLightbox(img.src));
     });
   }
-
-});
