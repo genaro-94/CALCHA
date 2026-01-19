@@ -61,16 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
   lightbox.appendChild(lightboxImg);
   document.body.appendChild(lightbox);
 
-  // ------------------------
-  // LIGHTBOX - BACK BUTTON
-  // ------------------------
-
-  window.addEventListener("popstate", (e) => {
-    if (!lightbox.classList.contains("hidden")) {
-      lightbox.classList.add("hidden");
-      return;
-    }
-  });
+  
 
   // ------------------------
   // LIGHTBOX MEJORADO
@@ -104,7 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("popstate", (e) => {
     const estado = e.state || { vista: "home" };
-
+    
+if (estado && estado.lightbox) {
+  cerrarLightbox();
+  return;
+}
     vistaActual = estado.vista || "home";
 
     if (vistaActual === "home") {
