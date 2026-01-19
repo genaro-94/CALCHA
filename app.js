@@ -2,6 +2,28 @@
 // CALCHA - MOTOR COMPLETO (RESTAURADO)
 // =========================
 
+
+// =========================
+// ESTADO GLOBAL (NECESARIO PARA BOTÓN HOME)
+// =========================
+
+let vistaActual = "home";
+let ubicacionActiva = null;   // "cafayate" | "santa-maria" | "amaicha" | null
+let rubroActivo = "todos";   // "todos" | "pizzerias" | "hoteleria" | etc
+let comercioActivo = null;
+
+let carrito = [];
+let tipoEntrega = null;
+let direccionEntrega = "";
+
+let menuRubrosAbierto = false;
+let comercios = [];
+
+
+// =========================
+// DOM READY
+// =========================
+
 document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("app");
   const WHATSAPP_ADMIN = "5493875181644";
@@ -25,97 +47,96 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(url, "_blank");
   }
 
-let vistaActual = "home";
+  // ------------------------
+  // LIGHTBOX GLOBAL
+  // ------------------------
 
-let ubicacionActiva = null;   // "cafayate" | "santa-maria" | "amaicha" | null
-let rubroActivo = "todos";   // "todos" | "pizzerias" | "hoteleria" | etc
+  const lightbox = document.createElement("div");
+  lightbox.id = "lightbox";
+  lightbox.className = "lightbox hidden";
 
-let comercioActivo = null;
+  const lightboxImg = document.createElement("img");
+  lightboxImg.id = "lightbox-img";
 
-let carrito = [];
-let tipoEntrega = null;
-let direccionEntrega = "";
-
-let menuRubrosAbierto = false;
-let comercios = [];
+  lightbox.appendChild(lightboxImg);
+  document.body.appendChild(lightbox);
 
   // ------------------------
-// ------------------------
-// LIGHTBOX GLOBAL
-// ------------------------
+  // LIGHTBOX - BACK BUTTON
+  // ------------------------
 
-// Agregar al body un solo lightbox
-const lightbox = document.createElement("div");
-lightbox.id = "lightbox";
-lightbox.className = "lightbox hidden";
+  window.addEventListener("popstate", (e) => {
+    if (!lightbox.classList.contains("hidden")) {
+      lightbox.classList.add("hidden");
+      return;
+    }
+  });
 
-const lightboxImg = document.createElement("img");
-lightboxImg.id = "lightbox-img";
+  // ------------------------
+  // LIGHTBOX MEJORADO
+  // ------------------------
 
-lightbox.appendChild(lightboxImg);
-document.body.appendChild(lightbox);
-
-// ------------------------
-// LIGHTBOX - BACK BUTTON
-// ------------------------
-window.addEventListener("popstate", (e) => {
-  // Si el lightbox está abierto, lo cerramos y NO navegamos
-  if (!lightbox.classList.contains("hidden")) {
-    lightbox.classList.add("hidden");
-    return; // ⛔ frena la navegación de la app
+  function abrirLightbox(src) {
+    const img = document.getElementById("lightbox-img");
+    img.src = src;
+    lightbox.classList.remove("hidden");
+    history.pushState({ lightbox: true }, "");
   }
-});
-  // ------------------------
-// LIGHTBOX MEJORADO
-// ------------------------
-function abrirLightbox(src) {
-  const lightbox = document.getElementById("lightbox");
-  const img = document.getElementById("lightbox-img");
 
-  img.src = src;
-  lightbox.classList.remove("hidden");
-
-  history.pushState({ lightbox: true }, "");
-}
-
-// Cerrar lightbox
-function cerrarLightbox() {
-  const lightbox = document.getElementById("lightbox");
-  if (!lightbox.classList.contains("hidden")) {
-    lightbox.classList.add("hidden");
-    // Volvemos atrás en el historial solo si fue pushState del lightbox
-    if (history.state && history.state.lightbox) {
-      history.back();
+  function cerrarLightbox() {
+    if (!lightbox.classList.contains("hidden")) {
+      lightbox.classList.add("hidden");
+      if (history.state && history.state.lightbox) {
+        history.back();
+      }
     }
   }
-}
 
-// Cerrar al tocar afuera
-document.addEventListener("click", e => {
-  if (e.target.id === "lightbox") {
-    cerrarLightbox();
-  }
-});
+  document.addEventListener("click", e => {
+    if (e.target.id === "lightbox") {
+      cerrarLightbox();
+    }
+  });
 
   // ------------------------
   // HISTORIAL
   // ------------------------
-    window.addEventListener("popstate", (e) => {
-  const estado = e.state || { vista: "home" };
 
-  vistaActual = estado.vista || "home";
+  window.addEventListener("popstate", (e) => {
+    const estado = e.state || { vista: "home" };
 
-  if (vistaActual === "home") {
-    rubroActivo = "todos";
-    comercioActivo = null;
-  }
+    vistaActual = estado.vista || "home";
 
-  if (estado.comercioId) {
-    comercioActivo = comercios.find(c => c.id === estado.comercioId);
-  }
+    if (vistaActual === "home") {
+      rubroActivo = "todos";
+      comercioActivo = null;
+    }
+
+    if (estado.comercioId) {
+      comercioActivo = comercios.find(c => c.id === estado.comercioId);
+    }
+
+    renderApp();
+  });
 
   renderApp();
 });
+
+
+// =========================
+// BOTÓN HOME GLOBAL 🏠
+// =========================
+
+function volverHome() {
+  vistaActual = "home";
+  ubicacionActiva = null;
+  rubroActivo = "todos";
+  comercioActivo = null;
+  menuRubrosAbierto = false;
+
+  renderApp();
+}
+
   // ------------------------
   // DATA
   // ------------------------
