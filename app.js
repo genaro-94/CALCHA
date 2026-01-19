@@ -359,6 +359,10 @@ function irARubro(rubro) {
 function setUbicacion(ubi) {
   ubicacionActiva = ubi;
 
+  document.querySelectorAll(".ubi-btn").forEach(b => {
+    b.classList.toggle("active", b.dataset.ubi === ubi);
+  });
+
   history.pushState(
     { vista: "home", ubicacion: ubi },
     "",
