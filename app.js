@@ -353,6 +353,20 @@ function irARubro(rubro) {
 
   renderApp();
 }
+  // ------------------------
+// UBICACIÓN ACTIVA
+// ------------------------
+function setUbicacion(ubi) {
+  ubicacionActiva = ubi;
+
+  history.pushState(
+    { vista: "home", ubicacion: ubi },
+    "",
+    "#ubicacion-" + ubi
+  );
+
+  renderHome();
+}
   function obtenerComerciosVisibles() {
   let lista = comercios;
 
