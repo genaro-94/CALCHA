@@ -168,7 +168,7 @@ function renderHome() {
     `
     : ""
     }
-
+ <div id="selector-ubicacion"></div>
     <!-- Barra de búsqueda -->
     <div class="buscador">
       <input type="text" id="input-busqueda" placeholder="🔍 Buscar comercio..." autocomplete="off">
