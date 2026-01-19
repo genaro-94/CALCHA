@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.open(url, "_blank");
   }
 
-  let vistaActual = "home";
+  let vistaActual = "home"; 
+  let ubicacionActiva = null;
+  let rubroActivo = null;
   let comercioActivo = null;
   let carrito = [];
   let tipoEntrega = null;
