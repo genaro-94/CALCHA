@@ -118,8 +118,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderApp();
   });
+  function renderApp() {
+    if (vistaActual === "home") renderHome();
+    if (vistaActual === "ubicacion") renderUbicacion();
+    if (vistaActual === "pedido") renderPedido();
+    if (vistaActual === "confirmar") renderConfirmar();
+    if (vistaActual === "info") renderInfo();
+    if (vistaActual === "reserva") renderReserva();
+  }
 
-  // ⚠️ CLAVE: exponemos renderApp al scope global
+ // ------------------------
+  // DATA
+  // ------------------------
+  fetch("comercios.json")
+    .then(r => r.json())
+    .then(data => {
+      comercios = data.map(c => {
+        if (!c.tipoOperacion || !tiposOperacion.includes(c.tipoOperacion)) {
+          c.tipoOperacion = "pedido"; // default
+        }
+        return c;
+      });
+      renderHome();
+    }); 
   window.renderApp = renderApp;
 
   renderApp();
@@ -140,29 +161,10 @@ function volverHome() {
   window.renderApp(); 
 }
 
-  // ------------------------
-  // DATA
-  // ------------------------
-  fetch("comercios.json")
-    .then(r => r.json())
-    .then(data => {
-      comercios = data.map(c => {
-        if (!c.tipoOperacion || !tiposOperacion.includes(c.tipoOperacion)) {
-          c.tipoOperacion = "pedido"; // default
-        }
-        return c;
-      });
-      renderHome();
+renderHome();
     });
 
-  function renderApp() {
-    if (vistaActual === "home") renderHome();
-    if (vistaActual === "ubicacion") renderUbicacion();
-    if (vistaActual === "pedido") renderPedido();
-    if (vistaActual === "confirmar") renderConfirmar();
-    if (vistaActual === "info") renderInfo();
-    if (vistaActual === "reserva") renderReserva();
-  }
+
 
   // ------------------------
   // HOME
