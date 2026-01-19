@@ -133,6 +133,7 @@ document.addEventListener("click", e => {
 
   function renderApp() {
     if (vistaActual === "home") renderHome();
+    if (vistaActual === "ubicacion") renderUbicacion();
     if (vistaActual === "pedido") renderPedido();
     if (vistaActual === "confirmar") renderConfirmar();
     if (vistaActual === "info") renderInfo();
