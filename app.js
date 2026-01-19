@@ -18,14 +18,14 @@ let direccionEntrega = "";
 
 let menuRubrosAbierto = false;
 let comercios = [];
-
+let app;
 
 // =========================
 // DOM READY
 // =========================
 
 document.addEventListener("DOMContentLoaded", () => {
-  const app = document.getElementById("app");
+  app = document.getElementById("app");
   const WHATSAPP_ADMIN = "5493875181644";
 
   // ------------------------
@@ -115,12 +115,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (estado.comercioId) {
       comercioActivo = comercios.find(c => c.id === estado.comercioId);
     }
+if (estado.ubicacion !== undefined) {
+  ubicacionActiva = estado.ubicacion;
+}
 
+if (estado.rubro !== undefined) {
+  rubroActivo = estado.rubro;
+}
     renderApp();
   });
   function renderApp() {
-    if (vistaActual === "home") renderHome();
-    if (vistaActual === "ubicacion") renderUbicacion();
+    if (vistaActual === "home") renderHome();  
     if (vistaActual === "pedido") renderPedido();
     if (vistaActual === "confirmar") renderConfirmar();
     if (vistaActual === "info") renderInfo();
@@ -160,10 +165,6 @@ function volverHome() {
 
   window.renderApp(); 
 }
-
-renderHome();
-    });
-
 
 
   // ------------------------
