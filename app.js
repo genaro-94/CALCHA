@@ -546,23 +546,33 @@ function activarBusqueda() {
   };
 }
 
-const lightbox = document.getElementById("lightbox");
+
 
 // ------------------------
 // LIGHTBOX
 // ------------------------
 
+const lightbox = document.getElementById("lightbox");
+
 function abrirLightbox(src) {
   const img = document.getElementById("lightbox-img");
   img.src = src;
   lightbox.classList.remove("hidden");
-
   history.pushState({ lightbox: true }, "");
 }
 
 function cerrarLightbox() {
   lightbox.classList.add("hidden");
 }
+
+document.addEventListener("click", e => {
+  if (e.target.id === "lightbox") {
+    cerrarLightbox();
+    if (history.state && history.state.lightbox) {
+      history.back();
+    }
+  }
+});
 
 
 
