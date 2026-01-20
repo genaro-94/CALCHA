@@ -18,6 +18,7 @@ let direccionEntrega = "";
 
 let comercios = [];
 let app = null;
+let lightbox;
 
 const WHATSAPP_ADMIN = "5493875181644";
 const tiposOperacion = ["pedido", "reserva", "info", "mixto"];
@@ -549,8 +550,15 @@ function activarBusqueda() {
 // ------------------------
 // LIGHTBOX
 // ------------------------
+function crearLightbox() {
+  if (document.getElementById("lightbox")) return;
 
-const lightbox = document.getElementById("lightbox");
+  const div = document.createElement("div");
+  div.id = "lightbox";
+  div.className = "hidden";
+  div.innerHTML = `<img id="lightbox-img">`;
+  document.body.appendChild(div);
+}
 
 function abrirLightbox(src) {
   const img = document.getElementById("lightbox-img");
