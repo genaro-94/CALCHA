@@ -349,60 +349,164 @@ function renderInfoComercio() {
 // =========================
 
 function renderPedido() {
-  if (!comercioActivo) return volverHome();
+    if (!comercioActivo) return renderHome();
 
-  app.innerHTML = `
-    <button class="btn-volver">←</button>
+  let menuHTML = "";
+let categoriaActual = "";
 
-    <h2>${comercioActivo.nombre}</h2>
-    <p class="subtitulo">${comercioActivo.descripcion || ""}</p>
-
-    ${comercioActivo.galeria?.length ? `
-      <div class="galeria-comercio">
-        ${comercioActivo.galeria.map(img =>
-          `<img src="${img}" onclick="abrirLightbox('${img}')">`
-        ).join("")}
+comercioActivo.menu.forEach((item, i) => {
+  if (item.categoria !== categoriaActual) {
+    categoriaActual = item.categoria;
+    menuHTML += `
+      <div class="menu-categoria">
+        ${categoriaActual}
       </div>
-    ` : ""}
+    `;
+  }
 
-    ${comercioActivo.menu?.length ? `
-      <section class="menu">
-        ${comercioActivo.menu.map(p => `
-          <div class="item-menu">
-            <div>
-              <strong>${p.nombre}</strong>
-              <span>$${p.precio}</span>
-            </div>
-            <div class="controles">
-              <button onclick="restarProducto('${p.id}')">−</button>
-              <span>${cantidadEnCarrito(p.id)}</span>
-              <button onclick="sumarProducto('${p.id}')">+</button>
-            </div>
-          </div>
-        `).join("")}
-      </section>
-    ` : `<p class="subtitulo">Este comercio no tiene menú cargado.</p>`}
+  const enCarrito = carrito.find(p => p.nombre === item.nombre);
 
-    <section class="entrega">
-      <button onclick="setTipoEntrega('retiro')">Retiro</button>
-      <button onclick="setTipoEntrega('delivery')">Delivery</button>
-    </section>
-
-    <div class="total">
-      Total: $${calcularTotal()}
+  menuHTML += `
+    <div class="item-menu">
+      <span>${item.nombre} - $${item.precio}</span>
+      <div>
+        ${enCarrito ? `<button data-i="${i}" data-a="restar">−</button>
+        <strong>${enCarrito.cantidad}</strong>` : ""}
+        <button data-i="${i}" data-a="sumar">+</button>
+      </div>
     </div>
-
-    <button class="btn-confirmar" onclick="continuarPedido()">
-      Continuar pedido
-    </button>
   `;
+});
+    const total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
 
-  document.querySelector(".btn-volver").onclick = () => history.back();
-}
+    app.innerHTML = `
+      <button class="btn-volver">← Volver</button>
 
-function renderConfirmar() {
-  app.innerHTML = `<button onclick="history.back()">←</button><h2>Confirmar</h2>`;
-}
+      <img src="${comercioActivo.imagen}" class="comercio-img">
+
+      <h2>${comercioActivo.nombre}</h2>
+      <p>${comercioActivo.descripcion}</p>
+
+      ${
+        comercioActivo.galeria && comercioActivo.galeria.length > 0
+          ? `<div class="galeria-comercio">
+              ${comercioActivo.galeria.map(img => `<img src="${img}" class="galeria-img">`).join("")}
+            </div>`
+          : ""
+      }
+
+      <div class="menu">${menuHTML}</div>
+
+      <h3>Entrega</h3>
+      <div class="entrega">
+        <button id="retiro" class="${tipoEntrega === "retiro" ? "activo" : ""}">🏠 Retiro</button>
+        ${
+          comercioActivo.permiteDelivery
+            ? `<button id="delivery" class="${tipoEntrega === "delivery" ? "activo" : ""}">🛵 Delivery</button>`
+            : ""
+        }
+      </div>
+
+      ${
+        tipoEntrega === "delivery"
+          ? `<input id="direccion" placeholder="Dirección" value="${direccionEntrega}">`
+          : ""
+      }
+
+      <div class="carrito">
+        <strong>Total: $${total}</strong>
+        <button class="btn-continuar" ${!total || !tipoEntrega ? "disabled" : ""} id="continuar">
+          Continuar
+        </button>
+      </div>
+    `;
+
+    // ------------------------
+    // Eventos
+    // ------------------------
+    document.querySelector(".btn-volver").onclick = () => history.back();
+
+    document.querySelectorAll("[data-a]").forEach(b => {
+      b.onclick = () => {
+        const prod = comercioActivo.menu[b.dataset.i];
+        const ex = carrito.find(p => p.nombre === prod.nombre);
+        if (b.dataset.a === "sumar") {
+          if (ex) ex.cantidad++;
+          else carrito.push({ ...prod, cantidad: 1 });
+        }
+        if (b.dataset.a === "restar" && ex) {
+          ex.cantidad--;
+          if (ex.cantidad === 0) carrito = carrito.filter(p => p !== ex);
+        }
+        renderPedido();
+      };
+    });
+
+    document.getElementById("retiro").onclick = () => {
+      tipoEntrega = "retiro";
+      direccionEntrega = "";
+      renderPedido();
+    };
+
+    const btnDel = document.getElementById("delivery");
+    if (btnDel) {
+      btnDel.onclick = () => {
+        tipoEntrega = "delivery";
+        renderPedido();
+      };
+    }
+
+    const dir = document.getElementById("direccion");
+    if (dir) dir.oninput = e => direccionEntrega = e.target.value;
+
+    document.getElementById("continuar").onclick = () => {
+      vistaActual = "confirmar";
+      history.pushState({ vista: "confirmar" }, "", "#confirmar");
+      renderConfirmar();
+    };
+
+    // ------------------------
+    // Lightbox: hacer clic en miniaturas
+    // ------------------------
+    document.querySelectorAll(".galeria-img").forEach(img => {
+      img.addEventListener("click", () => abrirLightbox(img.src));
+    });
+  }
+
+  // ------------------------
+  // CONFIRMAR
+  // ------------------------
+  function renderConfirmar() {
+    const total = carrito.reduce((s, p) => s + p.precio * p.cantidad, 0);
+
+    let resumen = carrito.map(p =>
+      `<div class="item-confirmacion">
+        <span>${p.nombre} x${p.cantidad}</span>
+        <span>$${p.precio * p.cantidad}</span>
+      </div>`
+    ).join("");
+
+    let msg = `🛒 Pedido - ${comercioActivo.nombre}\n`;
+    carrito.forEach(p => msg += `• ${p.nombre} x${p.cantidad}\n`);
+    msg += `\nTotal: $${total}\nEntrega: ${tipoEntrega}`;
+    if (tipoEntrega === "delivery") msg += `\nDirección: ${direccionEntrega}`;
+
+    app.innerHTML = `
+      <button class="btn-volver">← Volver</button>
+      <h2>Confirmar pedido</h2>
+
+      <div class="resumen">${resumen}</div>
+
+      <h3>Total: $${total}</h3>
+
+      <button class="btn-confirmar"
+        onclick="window.open('https://wa.me/54${comercioActivo.whatsapp}?text=${encodeURIComponent(msg)}','_blank')">
+        Enviar por WhatsApp
+      </button>
+    `;
+
+    document.querySelector(".btn-volver").onclick = () => history.back();
+  }
 
 
 // =========================
