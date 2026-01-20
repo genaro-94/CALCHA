@@ -173,6 +173,8 @@ function renderHome() {
   activarBusqueda();
   activarRubros();
   activarUbicaciones();
+  crearLightbox(); 
+  activarGaleria();
 }
 
 
@@ -547,39 +549,74 @@ function activarBusqueda() {
 
 
 
-// ------------------------
-// LIGHTBOX
-// ------------------------
+// =========================
+// LIGHTBOX COMPLETO
+// =========================
+
+let lightbox; // variable global para manipular el lightbox
+
 function crearLightbox() {
   if (document.getElementById("lightbox")) return;
 
   const div = document.createElement("div");
   div.id = "lightbox";
-  div.className = "lightbox hidden";  
+  div.className = "lightbox hidden"; // se marca como lightbox y hidden
   div.innerHTML = `<img id="lightbox-img">`;
   document.body.appendChild(div);
+
+  lightbox = div;
 }
 
+// Abrir imagen en lightbox
 function abrirLightbox(src) {
   const img = document.getElementById("lightbox-img");
   img.src = src;
   lightbox.classList.remove("hidden");
-  history.pushState({ lightbox: true }, "");
+  history.pushState({ lightbox: true }, ""); // agrega al historial
 }
 
+// Cerrar lightbox
 function cerrarLightbox() {
-  lightbox.classList.add("hidden");
+  if (!lightbox.classList.contains("hidden")) {
+    lightbox.classList.add("hidden");
+    if (history.state && history.state.lightbox) {
+      history.back(); // vuelve atrás en historial solo si estaba en lightbox
+    }
+  }
 }
 
-// Click afuera
+// Click fuera de la imagen
 document.addEventListener("click", e => {
   if (e.target.id === "lightbox") {
     cerrarLightbox();
-    if (history.state && history.state.lightbox) {
-      history.back();
-    }
   }
 });
+
+// Back físico / historial
+window.addEventListener("popstate", e => {
+  if (!lightbox.classList.contains("hidden")) {
+    cerrarLightbox(); // cierra lightbox antes de ir al historial anterior
+  } else {
+    // aquí va tu manejo de back normal para vistas (home, pedido, etc.)
+    const s = e.state || { vista: "home" };
+    vistaActual = s.vista || "home";
+    rubroActivo = s.rubro ?? rubroActivo;
+    ubicacionActiva = s.ubicacion ?? ubicacionActiva;
+    if (s.comercioId) {
+      comercioActivo = comercios.find(c => c.id === s.comercioId) || null;
+    } else {
+      comercioActivo = null;
+    }
+    renderApp();
+  }
+});
+
+// Activar click en galería
+function activarGaleria() {
+  document.querySelectorAll(".galeria-img").forEach(img => {
+    img.onclick = () => abrirLightbox(img.src);
+  });
+}
 // =========================
 // UTIL
 // =========================
