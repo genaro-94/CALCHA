@@ -1,4 +1,4 @@
-const CACHE_NAME = "calcha-v7";
+const CACHE_NAME = "calcha-v8";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
