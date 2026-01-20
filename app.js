@@ -178,8 +178,17 @@ function renderListaComercios() {
   lista.innerHTML = "";
 
   obtenerComerciosVisibles().forEach(c => {
-    const card = document.createElement("div");
-    card.innerHTML = `<h3>${c.nombre}</h3><button>Ver</button>`;
+  const card = document.createElement("div");
+card.className = "card-comercio";
+
+card.innerHTML = `
+  <img src="${c.imagen}" alt="${c.nombre}">
+  <div class="info">
+    <h3>${c.nombre}</h3>
+    <p>${c.descripcion}</p>
+    <button>Ver</button>
+  </div>
+`;
 
     card.querySelector("button").onclick = () => {
       comercioActivo = c;
