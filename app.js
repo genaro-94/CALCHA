@@ -126,7 +126,8 @@ function renderHome() {
         .map(r => `<button data-rubro="${r}">${r}</button>`).join("")}
     </section>
 
-    <div id="lista-comercios"></div>
+    <div id="lista-comercios"
+    class="lista-comercios"></div>
   `;
 
   document.getElementById("btn-menu").onclick = () => {
