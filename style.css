@@ -162,12 +162,18 @@ button:disabled {
 
 .card-comercio img {
   width: 100%;
-  height: 220px;
+  height: 180px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 8px;
 }
-
+.comercio-portada {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
 .card-comercio p {
   font-size: 13px;
   opacity: 0.75;
