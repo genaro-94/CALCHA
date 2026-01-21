@@ -30,7 +30,8 @@
       "precio": 250
     }
   ],
-  "galerias":  
+  "galerias": {
+    "platos": 
     [
     "images/fritas.png",
     "images/lomo.jpg",
