@@ -114,8 +114,8 @@ function renderHome() {
   vistaActual = "home";
 
   app.innerHTML = `
-    <h1>CALCHA</h1>
-    <p class="subtitulo">El mercado local en tu mano</p>
+    <h1 class="titulo">CALCHA</h1>
+<p class="subtitulo">El mercado vallista en tu mano</p>
 
     <button id="btn-menu">☰</button>
 
