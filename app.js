@@ -165,11 +165,15 @@ function renderHome() {
     <div id="lista-comercios"
     class="lista-comercios"></div>
   `;
-const subtitulo = app.querySelector(".subtitulo");
+const mensajeRubro = document.getElementById("mensaje-rubro");
 
-if (subtitulo && rubroActivo === "motodelivery") {
-  subtitulo.innerText =
-    "Moto delivery particulares – coordiná directo con el conductor";
+if (mensajeRubro) {
+  mensajeRubro.innerHTML = "";
+
+  if (rubroActivo === "motodelivery") {
+    mensajeRubro.innerText =
+      "🛵 Moto delivery particulares – coordiná directo con el conductor";
+  }
 }
   document.getElementById("btn-menu").onclick = () => {
     vistaActual = "menu";
