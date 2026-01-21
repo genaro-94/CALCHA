@@ -420,8 +420,8 @@ z-index: 1000;
 
 /* LOGO */
 .logo-calcha {
+  width: 80px;       /* tamaño más pequeño, ajustá según quieras */
+  height: auto;
   display: block;
-  height: 40px;
-  width: auto;
-  margin: 40px 0 6px 12px; 
+  margin: 10px; 
 }
