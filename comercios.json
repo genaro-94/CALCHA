@@ -30,7 +30,7 @@
       "precio": 250
     }
   ],
-  "galerias": { 
+  "galerias":  
     [
     "images/fritas.png",
     "images/lomo.jpg",
@@ -67,7 +67,8 @@
     "images/llama1.jpg",
     "images/llama2.jpg",
     "images/llama3.jpg",
-    "images/llama4.jpg"],
+    "images/llama4.jpg"]
+    },
     "whatsapp": "3875181644",
     "estado": "activo",
     "destacado": false
