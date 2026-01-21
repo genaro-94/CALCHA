@@ -420,10 +420,11 @@ z-index: 1000;
 
 /* LOGO */
 .logo-calcha {
-  width: 80px;
-  height: auto;
-  position: fixed;  /* cambia de absolute a fixed */
+  width: 40px;      /* ajustado a tu tamaño deseado */
+  height: 40px;     /* para que sea cuadrado */
+  position: fixed;  /* fijo en pantalla */
   top: 10px;
   left: 10px;
-  z-index: 2000;;
+  z-index: 2000;
+  transition: opacity 0.3s ease;  /* para efecto suave al desaparecer */
 }
