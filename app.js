@@ -186,8 +186,7 @@ if (mensajeRubro) {
   activarBusqueda();
   activarRubros();
   activarUbicaciones();
-  
-  abrirLightbox(); 
+  ; 
   activarGaleria();
 }
 
