@@ -188,8 +188,8 @@ if (mensajeRubro) {
   activarBusqueda();
   activarRubros();
   activarUbicaciones();
-  activarGaleriasScroll();
-  crearLightbox(); 
+  
+  abrirLightbox(); 
   activarGaleria();
 }
 
@@ -471,36 +471,7 @@ btnTerminos.addEventListener("click", () => {
 });
   document.querySelector(".btn-volver").onclick = () => history.back();
 }
-// Función que activa los botones ◀️▶️ de todas las galerías
-function abrirLightbox(src, fotos) {
-  fotosActuales = fotos;
-  indiceFoto = fotos.indexOf(src);
 
-  const lightbox = document.createElement("div");
-  lightbox.className = "lightbox";
-  lightbox.innerHTML = `
-    <button class="lightbox-close">✖️</button>
-    <button class="lightbox-prev">◀️</button>
-    <img src="${fotosActuales[indiceFoto]}" class="lightbox-img">
-    <button class="lightbox-next">▶️</button>
-  `;
-  document.body.appendChild(lightbox);
-
-  // Cerrar lightbox
-  lightbox.querySelector(".lightbox-close").onclick = () => lightbox.remove();
-
-  // Navegar foto anterior
-  lightbox.querySelector(".lightbox-prev").onclick = () => {
-    indiceFoto = (indiceFoto - 1 + fotosActuales.length) % fotosActuales.length;
-    lightbox.querySelector(".lightbox-img").src = fotosActuales[indiceFoto];
-  };
-
-  // Navegar foto siguiente
-  lightbox.querySelector(".lightbox-next").onclick = () => {
-    indiceFoto = (indiceFoto + 1) % fotosActuales.length;
-    lightbox.querySelector(".lightbox-img").src = fotosActuales[indiceFoto];
-  };
-}
 
 // =========================
 // RESERVA / INFO COMERCIO
@@ -761,42 +732,42 @@ function activarBusqueda() {
 // LIGHTBOX COMPLETO
 // =========================
 
-function crearLightbox() {
-  if (document.getElementById("lightbox")) return;
+function abrirLightbox(src, fotos) {
+  fotosActuales = fotos;
+  indiceFoto = fotos.indexOf(src);
 
-  const div = document.createElement("div");
-  div.id = "lightbox";
-  div.className = "lightbox hidden"; // se marca como lightbox y hidden
-  div.innerHTML = `<img id="lightbox-img">`;
-  document.body.appendChild(div);
+  const lightbox = document.createElement("div");
+  lightbox.className = "lightbox";
+  lightbox.innerHTML = `
+    <button class="lightbox-close">✖️</button>
+    <button class="lightbox-prev">◀️</button>
+    <img src="${fotosActuales[indiceFoto]}" class="lightbox-img">
+    <button class="lightbox-next">▶️</button>
+  `;
+  document.body.appendChild(lightbox);
 
-  lightbox = div;
-}
+  const img = lightbox.querySelector(".lightbox-img");
 
-// Abrir imagen en lightbox
-function abrirLightbox(src) {
-  const img = document.getElementById("lightbox-img");
-  img.src = src;
-  lightbox.classList.remove("hidden");
-  history.pushState({ lightbox: true }, ""); // agrega al historial
-}
+  // Cerrar con botón ✖️
+  lightbox.querySelector(".lightbox-close").onclick = () => lightbox.remove();
 
-// Cerrar lightbox
-function cerrarLightbox() {
-  if (!lightbox.classList.contains("hidden")) {
-    lightbox.classList.add("hidden");
-    if (history.state && history.state.lightbox) {
-      history.back(); // vuelve atrás en historial solo si estaba en lightbox
-    }
-  }
-}
+  // Cerrar al click fuera de la imagen
+  lightbox.addEventListener("click", e => {
+    if (e.target === lightbox) lightbox.remove();
+  });
 
-// Click fuera de la imagen
-document.addEventListener("click", e => {
-  if (e.target.id === "lightbox") {
-    cerrarLightbox();
-  }
-});
+  // Navegar foto anterior
+  lightbox.querySelector(".lightbox-prev").onclick = () => {
+    indiceFoto = (indiceFoto - 1 + fotosActuales.length) % fotosActuales.length;
+    img.src = fotosActuales[indiceFoto];
+  };
+
+  // Navegar foto siguiente
+  lightbox.querySelector(".lightbox-next").onclick = () => {
+    indiceFoto = (indiceFoto + 1) % fotosActuales.length;
+    img.src = fotosActuales[indiceFoto];
+  };
+      }
 
 // Back físico / historial
 window.addEventListener("popstate", e => {
