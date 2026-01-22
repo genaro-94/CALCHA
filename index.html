@@ -11,22 +11,71 @@
 
   <!-- Estilos -->
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* -----------------------
+       LOGO FIJO ARRIBA DERECHA
+    ----------------------- */
+    .logo-calcha {
+      position: fixed;    /* Fijo en pantalla */
+      top: 10px;          /* Separación desde arriba */
+      right: 10px;        /* Separación desde la derecha */
+      height: 40px;       /* Tamaño similar al botón 🏠 */
+      width: auto;        /* Mantiene proporción */
+      z-index: 1000;      /* Siempre encima del contenido */
+      object-fit: contain; 
+      cursor: pointer; 
+      transition: transform 0.2s;
+    }
+    .logo-calcha:hover {
+      transform: scale(1.1);
+    }
+
+    /* -----------------------
+       BOTÓN HOME
+    ----------------------- */
+    .btn-home {
+      font-size: 24px;
+      padding: 8px 12px;
+      margin: 20px;
+      cursor: pointer;
+    }
+
+    /* -----------------------
+       CONTENIDO PRINCIPAL
+    ----------------------- */
+    #app {
+      padding: 20px;
+      margin-top: 60px; /* para que no tape el botón home */
+    }
+  </style>
 </head>
 <body>
-  
-    <button id="btnHome" class="btn-home" onclick="volverHome()">
-  🏠
-</button>
 
-<img src="images/Logo.png" alt="Calcha" class="logo-calcha">
+  <!-- Botón Home normal, dentro de la SPA -->
+  <button id="btnHome" class="btn-home" onclick="volverHome()">🏠</button>
+
+  <!-- Logo fijo, siempre visible -->
+  <img src="images/Logo.png" alt="Calcha" class="logo-calcha" onclick="volverHome()">
+
+  <!-- Contenedor principal de la SPA -->
   <div id="app"></div>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js");
-  });
-}
-</script>
+
+  <script>
+    // Registrar service worker
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js");
+      });
+    }
+
+    // Función volver home, usada por botón y logo
+    function volverHome() {
+      if (window.renderApp) window.renderApp();
+    }
+  </script>
+
+  <!-- Tu JS principal -->
   <script src="app.js"></script>
 </body>
 </html>
