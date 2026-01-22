@@ -794,7 +794,6 @@ function cerrarLightbox() {
     if (history.state && history.state.lightbox) {
       history.back();
     }
-  }
 }
 
 // Back físico / historial
