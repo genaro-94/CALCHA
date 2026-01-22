@@ -704,9 +704,8 @@ function activarBusqueda() {
 
     if (!t) return;
 
-    // Filtramos todos los comercios
     comercios
-      .filter(c => !ubicacionActiva || c.ubicacion === ubicacionActiva) // solo filtra por ubicación si hay
+      .filter(c => !ubicacionActiva || c.ubicacion === ubicacionActiva) // solo filtra por ubicación
       .filter(c => {
         return (
           c.nombre.toLowerCase().includes(t) ||
@@ -717,17 +716,13 @@ function activarBusqueda() {
       .forEach(c => {
         const d = document.createElement("div");
 
-        // Función para resaltar texto buscado
-        const resaltar = (text) => {
-          const regex = new RegExp(`(${t})`, "gi"); // g = global, i = case-insensitive
-          return text.replace(regex, `<mark>$1</mark>`);
-        };
+        // Resaltado solo en el nombre
+        const regex = new RegExp(`(${t})`, "gi");
+        const nombreResaltado = c.nombre.replace(regex, `<mark>$1</mark>`);
 
-        // Creamos el contenido del div con resalte
         d.innerHTML = `
-          <strong>${resaltar(c.nombre)}</strong><br>
-          <small>${resaltar(c.rubro)}</small><br>
-          <span>${c.descripcion ? resaltar(c.descripcion) : ""}</span>
+          <strong class="busqueda-nombre">${nombreResaltado}</strong>
+          <small class="busqueda-rubro">${c.rubro}</small>
         `;
 
         d.onclick = () => {
@@ -741,8 +736,6 @@ function activarBusqueda() {
       });
   };
 }
-
-
 // =========================
 // LIGHTBOX CON GALERÍA ◀ ▶
 // =========================
