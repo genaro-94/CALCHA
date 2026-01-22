@@ -818,9 +818,15 @@ window.addEventListener("popstate", e => {
 // Activar click en galería
 function activarGaleria() {
   document.querySelectorAll(".galeria-comercio").forEach(galeria => {
-    const fotos = Array.from(galeria.querySelectorAll(".galeria-img")).map(img => img.src);
+    const fotos = Array.from(
+      galeria.querySelectorAll(".galeria-img")
+    ).map(img => img.src);
+
     galeria.querySelectorAll(".galeria-img").forEach(img => {
-      img.onclick = () => abrirLightbox(img.src, fotos);
+      img.onclick = () => {
+        console.log("CLICK EN IMAGEN", img.src); // 👈 DEBUG
+        abrirLightbox(img.src, fotos);
+      };
     });
   });
 }
