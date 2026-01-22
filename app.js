@@ -727,11 +727,12 @@ let fotosActuales = [];
 let indiceFoto = 0;
 
 // Abrir imagen en lightbox
+
 function abrirLightbox(src, fotos) {
   fotosActuales = fotos || [src];
   indiceFoto = fotosActuales.indexOf(src);
 
-  // Crear lightbox solo una vez
+  // Crear lightbox si no existe
   if (!lightboxDiv) {
     lightboxDiv = document.createElement("div");
     lightboxDiv.id = "lightbox";
@@ -744,41 +745,39 @@ function abrirLightbox(src, fotos) {
     `;
     document.body.appendChild(lightboxDiv);
 
-    // Cerrar
     lightboxDiv.querySelector(".lightbox-close").onclick = cerrarLightbox;
 
     lightboxDiv.addEventListener("click", e => {
       if (e.target === lightboxDiv) cerrarLightbox();
     });
 
-    // Navegación
     lightboxDiv.querySelector(".lightbox-prev").onclick = e => {
       e.stopPropagation();
-      indiceFoto =
-        (indiceFoto - 1 + fotosActuales.length) % fotosActuales.length;
-      mostrarFoto();
+      indiceFoto = (indiceFoto - 1 + fotosActuales.length) % fotosActuales.length;
+      mostrarFotoActual();
     };
 
     lightboxDiv.querySelector(".lightbox-next").onclick = e => {
       e.stopPropagation();
-      indiceFoto =
-        (indiceFoto + 1) % fotosActuales.length;
-      mostrarFoto();
+      indiceFoto = (indiceFoto + 1) % fotosActuales.length;
+      mostrarFotoActual();
     };
   }
 
-  mostrarFoto();
-}
+  mostrarFotoActual();
 
+  // mostrar overlay inmediatamente
+  lightboxDiv.classList.remove("hidden");
+
+  history.pushState({ lightbox: true }, "");
+      }
 // Mostrar foto (con preload)
-function mostrarFoto() {
+function mostrarFotoActual() {
   const img = lightboxDiv.querySelector("#lightbox-img");
 
-  lightboxDiv.classList.add("hidden");
-  img.src = "";
-
+  img.style.opacity = "0";
   img.onload = () => {
-    lightboxDiv.classList.remove("hidden");
+    img.style.opacity = "1";
   };
 
   img.src = fotosActuales[indiceFoto];
