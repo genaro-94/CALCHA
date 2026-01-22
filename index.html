@@ -13,22 +13,7 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* -----------------------
-       LOGO FIJO ARRIBA DERECHA
-    ----------------------- */
-    .logo-calcha {
-      top: 10px;          /* Separación desde arriba */
-      left: 10px;        /* Separación desde la derecha */
-      height: 40px;       /* Tamaño similar al botón 🏠 */
-      width: auto;        /* Mantiene proporción */
-      z-index: 1000;      /* Siempre encima del contenido */
-      object-fit: contain; 
-      cursor: pointer; 
-      transition: transform 0.2s;
-    }
-    .logo-calcha:hover {
-      transform: scale(1.1);
-    }
+
 
     /* -----------------------
        BOTÓN HOME
@@ -53,9 +38,6 @@
 
   <!-- Botón Home normal, dentro de la SPA -->
   <button id="btnHome" class="btn-home" onclick="volverHome()">🏠</button>
-
-  <!-- Logo fijo, siempre visible -->
-  <img src="images/Logo.png" alt="Calcha" class="logo-calcha" id="logoCalcha">
 
   <!-- Contenedor principal de la SPA -->
   <div id="app"></div>
