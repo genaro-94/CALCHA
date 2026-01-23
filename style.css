@@ -179,7 +179,13 @@ z-index: 1000;
   font-size: 13px;
   line-height: 1.1;
 }
+.rubros-grid {
+  cursor: grab;
+}
 
+.rubros-grid:active {
+  cursor: grabbing;
+}
 /* =========================
    UBICACIONES
 ========================= */
