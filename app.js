@@ -367,7 +367,7 @@ function volverHome() {
 
 function renderInfo() {
 app.innerHTML = `
-<button class="btn-volver" onclick="volver()">⬅️</button>
+<button class="btn-volver" onclick="volver()">←</button>
   <h2>ℹ️ ¿Qué es Calcha?</h2>
 
   <p>
@@ -489,7 +489,7 @@ function renderInfoComercio() {
   if (!comercioActivo) return volverHome();
 
   app.innerHTML = `
-    <button class="btn-volver" onclick="volver()">◀️</button>
+    <button class="btn-volver" onclick="volver()">←</button>
     <img src="${comercioActivo.imagen}" class="comercio-portada">
     <h2>${comercioActivo.nombre}</h2>
     <p>${comercioActivo.descripcion}</p>
