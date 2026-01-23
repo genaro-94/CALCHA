@@ -67,14 +67,13 @@ function manejarBackButton() {
   window.addEventListener("popstate", e => {
     const s = e.state || { vista: "home" };
 
-    // 👇 PRIORIDAD LIGHTBOX
+    // 🔹 PRIORIDAD LIGHTBOX
     if (s.lightbox) {
-      // lightbox abierto → cerrar sin cambiar vistaActual
       if (lightboxDiv) lightboxDiv.style.display = "none";
       return;
     }
 
-    // Actualizar vistas normales
+    // 🔹 Actualizar vistas normales
     vistaActual = s.vista || "home";
     rubroActivo = s.rubro ?? rubroActivo;
     ubicacionActiva = s.ubicacion ?? ubicacionActiva;
@@ -862,13 +861,14 @@ function abrirLightbox(src, fotos = []) {
 
   // 🔹 Integración con historial
   history.pushState({
-  vista: vistaActual,
-  rubro: rubroActivo,
-  ubicacion: ubicacionActiva,
-  comercioId: comercioActivo?.id ?? null,
-  lightbox: true
-}, "", "");
+    vista: vistaActual,
+    rubro: rubroActivo,
+    ubicacion: ubicacionActiva,
+    comercioId: comercioActivo?.id ?? null,
+    lightbox: true
+  }, "", "");
 }
+
 function moverLightbox(dir) {
   lightboxIndex += dir;
   if (lightboxIndex < 0) lightboxIndex = lightboxFotos.length - 1;
@@ -884,7 +884,7 @@ function cerrarLightbox() {
   if (lightboxDiv) {
     lightboxDiv.style.display = "none";
 
-    // 🔹 Usar history.back() solo si el estado actual es lightbox
+    // 🔹 Volver al estado anterior en el historial si estaba abierto
     if (history.state?.lightbox) {
       history.back();
     }
