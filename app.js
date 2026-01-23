@@ -823,6 +823,8 @@ let lightboxFotos = [];
 let lightboxIndex = 0;
 
 function abrirLightbox(src, fotos = []) {
+  const lightboxAbierto = lightboxDiv && lightboxDiv.style.display === "flex";
+
   lightboxFotos = fotos.length ? fotos : [src];
   lightboxIndex = lightboxFotos.indexOf(src);
   if (lightboxIndex === -1) lightboxIndex = 0;
@@ -838,36 +840,28 @@ function abrirLightbox(src, fotos = []) {
     `;
     document.body.appendChild(lightboxDiv);
 
-    // Cerrar lightbox con X o click fuera
     lightboxDiv.querySelector(".lightbox-close").onclick = cerrarLightbox;
-    lightboxDiv.onclick = e => {
-      if (e.target === lightboxDiv) cerrarLightbox();
-    };
+    lightboxDiv.onclick = e => { if (e.target === lightboxDiv) cerrarLightbox(); };
     lightboxDiv.querySelector(".lightbox-img").onclick = e => e.stopPropagation();
-
-    // Navegación dentro de la lightbox
-    lightboxDiv.querySelector(".lightbox-prev").onclick = e => {
-      e.stopPropagation();
-      moverLightbox(-1);
-    };
-    lightboxDiv.querySelector(".lightbox-next").onclick = e => {
-      e.stopPropagation();
-      moverLightbox(1);
-    };
+    lightboxDiv.querySelector(".lightbox-prev").onclick = e => { e.stopPropagation(); moverLightbox(-1); };
+    lightboxDiv.querySelector(".lightbox-next").onclick = e => { e.stopPropagation(); moverLightbox(1); };
   }
 
   actualizarLightbox();
   lightboxDiv.style.display = "flex";
 
-  // 🔹 Integración con historial
-  history.pushState({
-    vista: vistaActual,
-    rubro: rubroActivo,
-    ubicacion: ubicacionActiva,
-    comercioId: comercioActivo?.id ?? null,
-    lightbox: true
-  }, "", "");
+  // 🔹 Solo pushState si no estaba abierto
+  if (!lightboxAbierto) {
+    history.pushState({
+      vista: vistaActual,
+      rubro: rubroActivo,
+      ubicacion: ubicacionActiva,
+      comercioId: comercioActivo?.id ?? null,
+      lightbox: true
+    }, "", "");
+  }
 }
+
 
 function moverLightbox(dir) {
   lightboxIndex += dir;
