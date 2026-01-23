@@ -65,15 +65,16 @@ window.renderApp = renderApp;
 // =========================
 function manejarBackButton() {
   window.addEventListener("popstate", e => {
-    const s = e.state || { vista: "home" };
 
-    // 🔹 PRIORIDAD LIGHTBOX
-    if (s.lightbox) {
-      if (lightboxDiv) lightboxDiv.style.display = "none";
+    // 🔥 PRIORIDAD ABSOLUTA: lightbox abierto
+    if (lightboxDiv && lightboxDiv.style.display === "flex") {
+      cerrarLightbox(false); // false = NO tocar history
       return;
     }
 
-    // 🔹 Actualizar vistas normales
+    // 👉 navegación normal
+    const s = e.state || { vista: "home" };
+
     vistaActual = s.vista || "home";
     rubroActivo = s.rubro ?? rubroActivo;
     ubicacionActiva = s.ubicacion ?? ubicacionActiva;
@@ -87,7 +88,6 @@ function manejarBackButton() {
     renderApp();
   });
 }
-
 // =========================
 // DATA
 // =========================
@@ -889,21 +889,16 @@ function cerrarLightbox() {
 // =========================
 // ACTIVAR GALERÍA
 // =========================
-function activarGaleria() {
-  document.querySelectorAll(".galeria-comercio").forEach(galeria => {
-    const fotos = Array.from(galeria.querySelectorAll(".galeria-img")).map(img => img.src);
+function cerrarLightbox(volverHistorial = true) {
+  if (!lightboxDiv) return;
 
-    galeria.querySelectorAll(".galeria-img").forEach(img => {
-      // 🔹 Quitamos posibles listeners antiguos para no duplicar
-      img.onclick = null;
+  lightboxDiv.style.display = "none";
 
-      img.onclick = () => {
-        abrirLightbox(img.src, fotos);
-      };
-    });
-  });
+  // 🔹 SOLO volver en el historial si el cierre fue manual
+  if (volverHistorial && history.state?.lightbox) {
+    history.back();
+  }
 }
-
 
 // =========================
 // UTIL
