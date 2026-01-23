@@ -127,7 +127,15 @@ function renderHome() {
       <input id="input-busqueda" placeholder="🔍 Buscar comercio">
       <div id="resultados-busqueda"></div>
     </div>
+<section class="acciones-fijas">
+  <button class="accion-btn" data-rubro="todos">
+    🎨👟🍟 Todos
+  </button>
 
+  <button class="accion-btn" data-rubro="motodelivery">
+    🛵📦 Delivery
+  </button>
+</section>
   <section class="rubros-grid">
   <button class="rubro-btn" data-rubro="gastronomia">
     <span class="icon">🍽️🍔</span>
@@ -153,16 +161,8 @@ function renderHome() {
     <span class="icon">🛍️💍</span>
     <span class="text">Ropa y accesorios</span>
   </button>
-
-  <button class="rubro-btn" data-rubro="todos">
-  <span class="icon">🎨👟🍟</span>
-  <span class="text">Todos</span>
-</button>
-<button class="rubro-btn" data-rubro="motodelivery">
-  <span class="icon">🛵📦</span>
-  <span class="text">Delyvery/Paqueteria</span>
-</button>
 </section>
+
 <div id="mensaje-rubro" class="mensaje-rubro"></div>
     <div id="lista-comercios"
     class="lista-comercios"></div>
