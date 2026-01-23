@@ -357,7 +357,7 @@ function volverHome() {
 
 function renderInfo() {
 app.innerHTML = `
-<button id="btn-volver" class="btn-volver">← Volver</button>
+<button class="btn-volver" onclick="volver()">⬅️</button>
   <h2>ℹ️ ¿Qué es Calcha?</h2>
 
   <p>
