@@ -137,6 +137,7 @@ function renderHome() {
     🛵Delivery📦envíos
   </button>
 </section>
+<div class="rubros-wrapper">
   <section class="rubros-grid">
   <button class="rubro-btn" data-rubro="gastronomia">
     <span class="icon">🍽️🍔</span>
@@ -163,7 +164,7 @@ function renderHome() {
     <span class="text">Ropa y accesorios</span>
   </button>
 </section>
-
+</div>
 <div id="mensaje-rubro" class="mensaje-rubro"></div>
     <div id="lista-comercios"
     class="lista-comercios"></div>
