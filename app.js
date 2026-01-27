@@ -367,10 +367,9 @@ function activarUbicaciones() {
 // =========================
 // BOTÓN HOME
 // =========================
-
 function volverHome() {
   if (vistaActual === "home") {
-    // 👉 ya estás en home → subir arriba
+    // Ya estás en home → solo subir arriba
     window.scrollTo({
       top: 0,
       behavior: "smooth"
@@ -378,16 +377,20 @@ function volverHome() {
     return;
   }
 
-  // 👉 no estás en home → volver a home
+  // Reset total de estado
   vistaActual = "home";
-  rubroActivo = "home";
+  rubroActivo = "todos";
   ubicacionActiva = null;
   comercioActivo = null;
 
-  history.pushState({ vista: "home" }, "", "#home");
+  history.replaceState(
+    { vista: "home" },
+    "",
+    "#home"
+  );
+
   renderHome();
 }
-
 
 // =========================
 // INFO
