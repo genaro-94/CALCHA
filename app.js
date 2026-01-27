@@ -276,19 +276,21 @@ ${c.destacado ? `<span class="badge-destacado">👑 Destacado</span>` : ""}
 function activarRubros() {
   document.querySelectorAll("[data-rubro]").forEach(b => {
     b.onclick = () => {
-      rubroActivo = b.dataset.rubro;
+      const rubro = b.dataset.rubro;
 
-      history.replaceState(
-        { vista: "home", rubro: rubroActivo },
+      vistaActual = "rubro";
+      rubroActivo = rubro;
+
+      history.pushState(
+        { vista: "rubro", rubro },
         "",
-        "#home-" 
+        `#rubro-${rubro}`
       );
 
-      renderHome();
+      renderApp();
     };
   });
-}
-
+        }
 function obtenerComerciosVisibles() {
   let lista = [...comercios];
 
