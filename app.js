@@ -39,7 +39,15 @@ document.addEventListener("DOMContentLoaded", () => {
   renderApp();
 });
 
-
+document.addEventListener("click", (e) => {
+  if (e.target.closest(".btn-volver")) {
+    if (vistaActual === "infoComercio") {
+      vistaActual = "home";
+      history.replaceState({ vista: "home" }, "", "#home");
+      renderHome();
+    }
+  }
+});
 // =========================
 // ROUTER CENTRAL
 // =========================
