@@ -486,6 +486,7 @@ btnTerminos.addEventListener("click", () => {
 // RESERVA / INFO COMERCIO
 // =========================
 function renderInfoComercio() {
+  window.scrollTo(0, 0);
   if (!comercioActivo) return volverHome();
 
   app.innerHTML = `
@@ -519,6 +520,7 @@ function renderInfoComercio() {
 }
 
 function renderReserva() {
+  window.scrollTo(0, 0);
   if (!comercioActivo) return volverHome();
 
   const urlReserva =
@@ -562,6 +564,7 @@ function renderReserva() {
 // PEDIDO / CONFIRMAR
 // =========================
 function renderPedido() {
+  window.scrollTo(0, 0);
   if (!comercioActivo) return renderHome();
 
   let menuHTML = "";
