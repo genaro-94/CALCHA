@@ -294,14 +294,26 @@ cursor: grab;
   background: linear-gradient(135deg, #a14a1a, #d67d3e);
   color: #fff;
 }
+.badge-destacado {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #ffd700;
+  color: #000;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  z-index: 2;
+}
 .comercio-links {
-  position: fixed;          /* queda flotando */
-  right: 12px;              /* pegado al borde derecho */
-  top: 50%;                 /* centrado vertical */
+  position: fixed;          
+  right: 12px;              
+  top: 50%;                 
   transform: translateY(-50%);
   
   display: flex;
-  flex-direction: column;   /* 👈 vertical */
+  flex-direction: column;   
   gap: 12px;
 
   z-index: 1000;
