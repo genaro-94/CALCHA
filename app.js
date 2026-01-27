@@ -118,8 +118,8 @@ function renderHome() {
   <div class="home-header">
       <img src="images/Logo.png" alt="Calcha" class="logo-calcha">
     <div class="header-logo">
-  <img src="images/calcha1.png" alt="Calcha Market" />
-</div>
+      <img src="images/calcha1.png" alt="Calcha Market" />
+    </div>
     <button id="btn-menu">☰</button>
 
     <div id="selector-ubicacion"></div>
@@ -128,56 +128,48 @@ function renderHome() {
       <input id="input-busqueda" placeholder="🔍 Buscar comercio">
       <div id="resultados-busqueda"></div>
     </div>
-<section class="acciones-fijas">
-  <button class="accion-btn" data-rubro="todos">
-    <img src="images/todos.png" alt="Todos">
-  </button>
 
-  <button class="accion-btn" data-rubro="motodelivery">
-    <img src="images/delivery.png" alt="Delivery y envíos">
-  </button>
-</section>
+    <section class="acciones-fijas">
+      <button class="accion-btn" data-rubro="todos">
+        <img src="images/todos.png" alt="Todos">
+      </button>
 
-<div class="rubros-wrapper">
-  <section class="rubros-grid">
+      <button class="accion-btn" data-rubro="motodelivery">
+        <img src="images/delivery.png" alt="Delivery y envíos">
+      </button>
+    </section>
 
-    <button class="rubro-btn" data-rubro="gastronomia">
-      <img src="images/gastronomia.png" alt="Gastronomía">
-    </button>
+    <div class="rubros-wrapper">
+      <section class="rubros-grid">
+        <button class="rubro-btn" data-rubro="gastronomia">
+          <img src="images/gastronomia.png" alt="Gastronomía">
+        </button>
 
-    <button class="rubro-btn" data-rubro="turismo">
-      <img src="images/turismo.png" alt="Turismo">
-    </button>
+        <button class="rubro-btn" data-rubro="turismo">
+          <img src="images/turismo.png" alt="Turismo">
+        </button>
 
-    <button class="rubro-btn" data-rubro="almacen">
-      <img src="images/almacen.png" alt="Almacén">
-    </button>
+        <button class="rubro-btn" data-rubro="almacen">
+          <img src="images/almacen.png" alt="Almacén">
+        </button>
 
-    <button class="rubro-btn" data-rubro="servicios">
-      <img src="images/servicios.png" alt="Servicios">
-    </button>
+        <button class="rubro-btn" data-rubro="servicios">
+          <img src="images/servicios.png" alt="Servicios">
+        </button>
 
-    <button class="rubro-btn" data-rubro="ropa">
-      <img src="images/ropa.png" alt="Ropa y accesorios">
-    </button>
-  </section>
-</div>
+        <button class="rubro-btn" data-rubro="ropa">
+          <img src="images/ropa.png" alt="Ropa y accesorios">
+        </button>
+      </section>
+    </div>
 
-<div id="mensaje-rubro" class="mensaje-rubro"></div>
-    <div id="lista-comercios"
-    class="lista-comercios"></div>
+    <div id="mensaje-rubro" class="mensaje-rubro"></div>
+    <div id="lista-comercios" class="lista-comercios"></div>
   `;
-const mensajeRubro = document.getElementById("mensaje-rubro");
 
-if (mensajeRubro) {
-  mensajeRubro.innerHTML = "";
+  const mensajeRubro = document.getElementById("mensaje-rubro");
+  if (mensajeRubro) mensajeRubro.innerHTML = "";
 
-  if (rubroActivo === "motodelivery") {
-    mensajeRubro.innerText =
-      `🛵 deliverys y servicios de paqueteria particulares – coordiná directo con el conductor
-📦 Para mayor tranquilidad, sugerimos solicitar la ubicación en tiempo real por WhatsApp`;
-  }
-}
   document.getElementById("btn-menu").onclick = () => {
     vistaActual = "menu";
     history.pushState({ vista: "menu" }, "", "#menu");
@@ -185,14 +177,25 @@ if (mensajeRubro) {
   };
 
   renderSelectorUbicacion();
-  renderListaComercios();
   activarBusqueda();
   activarRubros();
   activarUbicaciones();
-  ; 
   activarGaleria();
-}
 
+  // =========================
+  // 👉 SOLO DESTACADOS EN HOME
+  // =========================
+  const comerciosOriginal = comercios;
+  const destacados = comercios.filter(c => c.destacado);
+
+  // Si todavía no hay destacados, mostramos todos
+  window.comercios = destacados.length ? destacados : comerciosOriginal;
+
+  renderListaComercios();
+
+  // Restauramos lista completa para el resto de la app
+  window.comercios = comerciosOriginal;
+}
 
 // =========================
 // MENÚ
