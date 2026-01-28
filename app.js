@@ -752,7 +752,7 @@ function renderPedido() {
     <h3>Entrega</h3>
     <div class="entrega">
       <button id="retiro" class="${tipoEntrega === "retiro" ? "activo" : ""}">
-        🏠 Retiro
+        🏠 Retiro personalmente 
       </button>
       ${comercioActivo.permiteDelivery ? `
         <button id="delivery" class="${tipoEntrega === "delivery" ? "activo" : ""}">
