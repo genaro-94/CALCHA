@@ -561,7 +561,6 @@ function renderInfoComercio() {
 
   app.innerHTML = `
     <button class="btn-volver">←</button>
-    ${comercioActivo.destacado ? `<div class="badge-destacado">⭐ Destacado</div>` : ""}
     <img src="${comercioActivo.imagen}" class="comercio-portada">
     <h2>${comercioActivo.nombre}</h2>
     <p>${comercioActivo.descripcion}</p>
@@ -601,7 +600,6 @@ function renderReserva() {
 
   app.innerHTML = `
     <button class="btn-volver">←</button>
-    ${comercioActivo.destacado ? `<div class="badge-destacado">          ⭐</div>` : ""}
     <img src="${comercioActivo.imagen}" class="comercio-portada">
     <h2>${comercioActivo.nombre}</h2>
     <p>${comercioActivo.descripcion}</p>
@@ -669,7 +667,6 @@ function renderPedido() {
 
   app.innerHTML = `
     <button class="btn-volver">←</button>
-    ${comercioActivo.destacado ? `<div class="badge-destacado">⭐ Destacado</div>` : ""}
     <img src="${comercioActivo.imagen}" class="comercio-portada">
     <h2>${comercioActivo.nombre}</h2>
     <p>${comercioActivo.descripcion}</p>
