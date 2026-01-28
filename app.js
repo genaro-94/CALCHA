@@ -67,7 +67,11 @@ function renderApp() {
 
 window.renderApp = renderApp;
 
-
+setInterval(() => {
+  if (vistaActual === "home") {
+    renderApp();
+  }
+}, 60000);
 // =========================
 // HISTORIAL / BACK FÍSICO
 // =========================
