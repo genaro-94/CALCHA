@@ -617,8 +617,8 @@ function renderInfoComercio() {
     <p>${comercioActivo.descripcion}</p>
 
     ${renderLinksComercio(comercioActivo)}
-  `;
-
+  ${comercioActivo.urlReserva ? `<button class="btn-reservar" onclick="window.open('${comercioActivo.urlReserva}','_blank')">Consultar 💬</button>` : ''}
+ `;
   // Insertar galerías
   if (comercioActivo.galerias) {
     Object.entries(comercioActivo.galerias).forEach(([categoria, fotos]) => {
