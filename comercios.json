@@ -88,7 +88,7 @@
     "ubicacion": "cafayate",
     "descripcion": "tienda de ropa",
     "imagen": "images/buzo.jpeg",
-    "tipoOperacion": "pedido",
+    "tipoOperacion": "info",
     "menu": [],
     "galerias": [],
     "whatsapp": "3872535433",
